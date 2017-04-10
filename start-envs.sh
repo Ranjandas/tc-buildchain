@@ -6,5 +6,5 @@ do
 	docker run \
 		-d \
 		--net cicd \
-		--name "${environment}" -d centos:6 sleep infinity
+		--name "${environment}" -d env:latest
 done
