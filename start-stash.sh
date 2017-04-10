@@ -1,4 +1,6 @@
 #!/bin/bash
+mkdir -p ~/docker_vols/stash
+
 docker run \
 	-u root \
 	-v "$HOME/docker_vols/stash":/var/atlassian/application-data/stash \

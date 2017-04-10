@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir ~/docker_vols/tcagent
 docker run \
 	-it \
 	--name tcagent1 \

@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir -p ~/docker_vols/tcserver
 docker run -it \
 	--name tcserver \
 	-e TEAMCITY_SERVER_MEM_OPTS="-Xmx2g -XX:MaxPermSize=270m -XX:ReservedCodeCacheSize=350m" \
