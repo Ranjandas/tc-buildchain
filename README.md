@@ -5,4 +5,5 @@ TeamCity Build Chain
 3. start-server.sh
 4. start-agent.sh
 5. start-artifactory.sh
+6. docker build -t env environ
 6. start-envs.sh
