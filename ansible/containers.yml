@@ -1,0 +1,55 @@
+---
+
+- hosts: localhost
+  vars:
+    network_name: cicd
+    tc_agent_count: 1
+  tasks:
+    - name: Create Docker Network
+      docker_network:
+        name: "{{ network_name }}"
+
+    - name: Create Stash Container
+      docker_container:
+        image: docker.io/atlassian/bitbucket-server
+        name: stash
+        hostname: stash
+        network_mode: bridge
+        networks:
+          - name: "{{ network_name }}"
+        purge_networks: yes
+        privileged: true
+
+    - name: Create Teamcity Server Container
+      docker_container:
+        image: jetbrains/teamcity-server
+        name: artifactory
+        hostname: artifactory
+        network_mode: bridge
+        networks:
+          - name: "{{ network_name }}"
+        purge_networks: yes
+        privileged: true
+
+    - name: Create Teamcity Agent Container
+      docker_container:
+        image: jetbrains/teamcity-agent
+        name: tc-agent-{{ item }}
+        hostname: tc-agent-{{ item }}
+        network_mode: bridge
+        networks:
+          - name: "{{ network_name }}"
+        purge_networks: yes
+        privileged: true
+      with_sequence: count={{ tc_agent_count }}
+
+    - name: Create Artifactory Container
+      docker_container:
+        image: docker.bintray.io/jfrog/artifactory-pro
+        name: tc-agent
+        hostname: tc-agent
+        network_mode: bridge
+        networks:
+          - name: "{{ network_name }}"
+        purge_networks: yes
+        privileged: true
